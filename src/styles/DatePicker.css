@@ -1,0 +1,16 @@
+.date-picker-wrapper{
+    margin: 10px;
+    padding: 5px;
+    border:1px solid rgb(118, 118, 118);
+
+}
+.date-picker{
+    border: none;
+    width: 50px;
+    margin-left: 25%;
+    
+}
+.date-picker-close{
+    padding-left: 5px;
+    
+}

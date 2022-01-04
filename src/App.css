@@ -1,0 +1,16 @@
+.App .outer-left-wrapper {
+  padding: 50px 30px;
+}
+
+.title{
+  border: 1px solid black
+}
+.body-wrapper {
+  border-style: solid;
+  border-width:0 1px 1px 1px;
+  border-color: black;
+}
+
+.outer-left-wrapper {
+  border-right: 1px solid black;
+}
