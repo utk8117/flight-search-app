@@ -3,16 +3,16 @@ import OneWayTabContent from './OneWayTabContent';
 import ReturnTabContent from './ReturnTabContent';
 import Tab from './Tab';
 
-function LeftSearch() {
+const LeftSearch = ({onSearchClick}) => {
 
     const tabContent = [
         {
             title: "One Way",
-            content: <OneWayTabContent/>
+        content: <OneWayTabContent onSearchClick={onSearchClick} />
         },
         {
             title: "Return",
-            content: <ReturnTabContent/>
+          content: <ReturnTabContent onSearchClick={onSearchClick} />
         }
     ]
     return (

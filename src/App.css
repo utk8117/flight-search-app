@@ -3,14 +3,22 @@
 }
 
 .title{
-  border: 1px solid black
+  border: 1px solid black;
+  width:100%;
 }
+
 .body-wrapper {
   border-style: solid;
   border-width:0 1px 1px 1px;
   border-color: black;
+  --bs-gutter-x:0px
+
 }
 
 .outer-left-wrapper {
   border-right: 1px solid black;
+}
+
+.outer-right-wrapper{
+  padding: 20px;
 }

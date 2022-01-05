@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import '../styles/DropDownStyles.css';
 
-const DropDownComponent = ({ name, options, labelText }) => {
+const DropDownComponent = ({ name, options, labelText, dropDownSelect, id }) => {
     const [dropDownList, setDropDownList] = useState([]);
-    const [selectedValue, setSelectedValue] = useState(options[1].value)
+    const [selectedValue, setSelectedValue] = useState('')
+
     useEffect(() => {
         let data = [];
         if (options.length) {
@@ -16,7 +17,12 @@ const DropDownComponent = ({ name, options, labelText }) => {
     return (
         <div className="drop-down-wrapper">
             <label className="drop-down-label">{labelText}</label>
-            <select className="drop-down-select" value={selectedValue} onChange={(e) => { setSelectedValue(e.target.value)}}>
+            <select className="drop-down-select" value={selectedValue}
+                id={id}
+                onChange={(e) => {
+                    setSelectedValue(e.target.value);
+                    dropDownSelect(e)
+                }}>
                 {dropDownList ? dropDownList : null}
            </select>
         </div>

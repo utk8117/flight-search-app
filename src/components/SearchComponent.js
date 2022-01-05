@@ -1,9 +1,9 @@
 import "../styles/SearchComponent.css";
 
-const Search = ({ placeholder, onSearch }) => {
+const Search = ({ placeholder, onSearch, id }) => {
     return (
         <div className="search-wrapper">
-            <input type={'text'} placeholder={placeholder} className="input-text" onChange={onSearch}/>
+            <input type={'text'} placeholder={placeholder} id={id} className="input-text" onChange={onSearch}/>
         </div>
     )
 }
