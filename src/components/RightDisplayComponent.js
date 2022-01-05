@@ -21,7 +21,7 @@ const RightDisplayComponent = ({flightData}) => {
             <div className="right-display-outer-wrapper">
             {
                 flightData.length > 0 ? <div>{flightFinalData}</div>: 
-                    'Loading...'
+                    'No flights found'
             }
             </div>
         </div>

@@ -1,16 +1,34 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import LeftSearch from './components/LeftSearchComponent';
-import RightDisplayComponent from './components/RightDisplayComponent';
 import axios from "axios";
+import moment from 'moment';
+import RightWrapper from './components/RightWrapperComponent';
 
 function App() {
   const [searchData, setSearchData] = useState(null);
   const [flightData, setFlightData] = useState([]);
   const [error, setError] = useState(false);
+  const [valid, setValid] = useState(true);
 
   const onSearchClick = (data) => {
-    setSearchData(data);
+    if (data.originCity && data.destinationCity && data.departureDate && data.passengers) {
+      if (data.isOneWay) {
+        setSearchData(data);
+        setValid(true);
+      }
+      else if(data.returnDate){
+        setSearchData(data);
+        setValid(true);
+      }
+      else {
+        setValid(false);
+      }
+    }
+    else {
+      setValid(false);
+    }
+    
   }
 
   useEffect(() => {
@@ -19,7 +37,9 @@ function App() {
       .then((resp) => {
         console.log(resp.data)
         let data = resp.data.filter(value => {
-          if (value.origin === searchData.originCity && value.destination === searchData.destinationCity) {
+          if (value.origin === searchData.originCity &&
+            value.destination === searchData.destinationCity &&
+            moment(moment(value.date).format("L")).isSame(moment(searchData.departureDate).format("L"))) {
             return value
           }
           })
@@ -31,7 +51,6 @@ function App() {
       }
     })
     }
-    
   }, [searchData])
 
   return (
@@ -42,21 +61,22 @@ function App() {
       <div className="body-wrapper row">
         <div className="outer-left-wrapper col-md-3">
           <LeftSearch onSearchClick={onSearchClick} />
+          <div>{ !valid ? <p className='invalid-input'>Please enter valid input</p>:null}</div>
         </div>
         
         <div className="outer-right-wrapper col-md-9">
           {
-            searchData != null && !error ? <div>
-              <div className="main-flight-title">
-                <h3>
-                  {searchData.originCity.toUpperCase()} to {searchData.destinationCity.toUpperCase()}
-                </h3>
-            <div className="flights-number">
-                {flightData.length} flights found      Monday, 30th Sept
-            </div>
-          </div>
-              <RightDisplayComponent flightData={flightData}/>
-              </div> : <h5>Where are you heading?</h5>
+            searchData != null && !error ? 
+              <div className='row'>
+                <div className={!searchData.isOneWay ?'col-md-6' : 'col-md-12'}>
+                  <RightWrapper flightData={flightData} searchData={searchData} />
+                </div>
+                {!searchData.isOneWay ?
+                  <div className='col-md-6'>
+                  <RightWrapper flightData={flightData} searchData={searchData} />
+                </div> : null}
+              </div>
+             : <h5>Where are you heading?</h5>
           }
         
         </div>

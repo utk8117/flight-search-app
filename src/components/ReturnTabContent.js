@@ -1,15 +1,23 @@
 import DatePickerComponent from "./DatePicker";
-import Search from "./SearchComponent";
+import SearchComponent from "./SearchComponent";
 import DropDownComponent from "./DropDownComponent";
 import { useState } from "react";
+import '../styles/SearchComponent.css';
 
-const ReturnTabContent = ({onSearchClick}) => {
+const ReturnTabContent = ({ onSearchClick }) => {
+    const options = [
+        { value: 'Pune (PNQ)', label: 'Pune (PNQ)' },
+        { value: 'Mumbai (BOM)', label: 'Mumbai (BOM)' },
+        { value: 'Bengaluru (BLR)', label: 'Bengaluru (BLR)' },
+        { value: 'Delhi (DEL)', label: 'Delhi (DEL)'},
+    ];
     const [searchData, setSearchData] = useState({
         originCity: '',
         destinationCity: '',
         departureDate: '',
         returnDate:'',
-        passengers: 1
+        passengers: 1,
+        isOneWay: false,
     })
     const handleChange = (value, id) => {
         let data = { ...searchData };
@@ -18,12 +26,14 @@ const ReturnTabContent = ({onSearchClick}) => {
     }
     return (
         <div className="one-way-outer-wrapper">
-            <Search placeholder={"Enter Origin City"}
+            <SearchComponent placeholder={"Enter Origin City"}
+                options={options}
                 id="originCity"
-                onSearch={(e) => { handleChange(e.target.value,e.target.id) }} />
-            <Search placeholder={"Enter Destination City"}
+                onSearch={(value) => { handleChange(value, "originCity");  }} />
+            <SearchComponent placeholder={"Enter Destination City"}
+                options={options}
                 id="destinationCity"
-                onSearch={(e) => { handleChange(e.target.value, e.target.id)}} />
+                onSearch={(value) => { handleChange(value, "destinationCity")}} />
             <DatePickerComponent placeholder={'Departure date'}
                 id="departureDate"
                 onDateSelect={(e) => handleChange(e.target.value, e.target.id)} />

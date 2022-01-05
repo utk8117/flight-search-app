@@ -1,6 +1,11 @@
+import moment from "moment";
 import "../styles/FlightListComponent.css"
 
-const FlightListComponent = ({flightData}) => {
+const FlightListComponent = ({ flightData }) => {
+    const arrivalTime = moment(flightData.date + " " +flightData.arrivalTime);
+    const departureTime = moment(flightData.date + " " + flightData.departureTime);
+    const timeDiffHr = arrivalTime.diff(departureTime, "hours");
+    const timeDiffMin = Math.floor(((arrivalTime.diff(departureTime, 'minutes')) % 1440) % 60);
     return (
         <div className="flight-list-wrapper">
             <div className="image-box-wrapper">
@@ -27,7 +32,7 @@ const FlightListComponent = ({flightData}) => {
                     </div>
                 </div>
                 <div className="flight-company">
-                    2hrs
+                    {timeDiffHr}h {timeDiffMin}m
                     <div className="flight-info">
                     Non stop
                     </div>
