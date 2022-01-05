@@ -1,7 +1,7 @@
 import moment from "moment";
 import "../styles/FlightListComponent.css"
 
-const FlightListComponent = ({ flightData }) => {
+const FlightListComponent = ({ flightData, searchData }) => {
     const arrivalTime = moment(flightData.date + " " +flightData.arrivalTime);
     const departureTime = moment(flightData.date + " " + flightData.departureTime);
     const timeDiffHr = arrivalTime.diff(departureTime, "hours");
@@ -38,7 +38,7 @@ const FlightListComponent = ({ flightData }) => {
                     </div>
                 </div>
                 <div className="flight-company">
-                    &#x20b9;{flightData.price}
+                    &#x20b9;{flightData.price * searchData.passengers}
                 </div>
                 <div className="book-button-wrapper">
                 <button type="button" className="btn btn-danger">Book</button>

@@ -13,7 +13,7 @@ const RightWrapper = ({ flightData, searchData }) => {
                   {moment(searchData.departureDate).format("dddd, D MMMM")}
             </div>
           </div>
-            <RightDisplayComponent flightData={flightData} />
+            <RightDisplayComponent flightData={flightData} searchData={searchData} />
         </div>
     )
 }

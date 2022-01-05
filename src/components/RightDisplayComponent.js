@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FlightListComponent from "./FlightListComponent";
 
-const RightDisplayComponent = ({flightData}) => {
+const RightDisplayComponent = ({flightData, searchData}) => {
     const [flightFinalData, setFlightFinalData] = useState([]);
 
     useEffect(() => {
@@ -9,7 +9,7 @@ const RightDisplayComponent = ({flightData}) => {
             const mapRows = flightData.map((item, index) => {
                 return (
                     <div key={index}>
-                        <FlightListComponent flightData={item} />
+                        <FlightListComponent flightData={item} searchData={searchData} />
                     </div>);
             })
             setFlightFinalData(mapRows);
