@@ -31,7 +31,7 @@ function App() {
     else {
       setValid(false);
     }
-    
+    setPriceRange(0);
   }
 
   useEffect(() => {
@@ -60,12 +60,29 @@ function App() {
   
   useEffect(() => {
     if (searchData) {
-      axios.get('https://tw-frontenders.firebaseio.com/advFlightSearch.json')
-      .then((resp) => {
-        console.log(resp.data)
-        setFlightResponse(resp.data);
-        let data = [];
-        data = resp.data.filter(value => {
+      if (flightResponse.length > 0) {
+        filterFlightData(flightResponse);
+      }
+      else {
+        axios.get('https://tw-frontenders.firebaseio.com/advFlightSearch.json')
+        .then((resp) => {
+          console.log(resp.data)
+          setFlightResponse(resp.data);
+          filterFlightData(resp.data);
+          })
+        .catch((error) => {
+          if (error) {
+            setError(true);
+        }
+      })
+      }
+    }
+  }, [searchData])
+
+  const filterFlightData = (filterData) => {
+    if (filterData.length > 0) {
+      let data = [];
+        data = filterData.filter(value => {
           if (value.origin === searchData.originCity &&
             value.destination === searchData.destinationCity &&
             moment(moment(value.date).format("L")).isSame(moment(searchData.departureDate).format("L"))) {
@@ -74,7 +91,7 @@ function App() {
           })
             setFlightData(data)
         if (!searchData.isOneWay) {
-          let dataLeft = resp.data.filter(value => {
+          let dataLeft = filterData.filter(value => {
             if (value.destination === searchData.originCity &&
               value.origin === searchData.destinationCity &&
               moment(moment(value.date).format("L")).isSame(moment(searchData.returnDate).format("L"))) {
@@ -83,15 +100,8 @@ function App() {
           })
           setReturnFlight(dataLeft)
         }
-        
-        })
-      .catch((error) => {
-        if (error) {
-          setError(true);
-      }
-    })
     }
-  }, [searchData])
+  }
 
   return (
     <div className="App">

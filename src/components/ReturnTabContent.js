@@ -1,7 +1,7 @@
 import DatePickerComponent from "./DatePicker";
 import SearchComponent from "./SearchComponent";
 import DropDownComponent from "./DropDownComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/SearchComponent.css';
 import SliderComponent from "./SliderComponent";
 
@@ -26,6 +26,10 @@ const ReturnTabContent = ({ onSearchClick , price, setPrice}) => {
         data[id] = value;
         setSearchData(data);
     }
+    useEffect(() => {
+        setPriceRange(price)
+    }, [price])
+    
     return (
         <div className="one-way-outer-wrapper">
             <SearchComponent placeholder={"Enter Origin City"}
@@ -45,7 +49,7 @@ const ReturnTabContent = ({ onSearchClick , price, setPrice}) => {
             <DropDownComponent name='passengers'
                 id='passengers'
                 dropDownSelect={(e)=>{handleChange(parseInt(e.target.value,10),e.target.id)}}
-                options={[{ id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3}]}
+                options={[{ id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3},{ id: 4, value: 4}]}
                 labelText='Selected Passengers: ' />
             <button type="button"
                 className="btn btn-primary"

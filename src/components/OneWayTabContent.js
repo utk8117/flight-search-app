@@ -25,9 +25,10 @@ const OneWayTabContent = ({ onSearchClick, price, setPrice }) => {
         data[id] = value;
         setSearchData(data);
     }
+    
     useEffect(() => {
-        console.log(searchData)
-    },[searchData])
+        setPriceRange(price)
+    },[price])
 
     return (
         <div className="one-way-outer-wrapper">
@@ -45,7 +46,7 @@ const OneWayTabContent = ({ onSearchClick, price, setPrice }) => {
             <DropDownComponent name='passengers'
                 id='passengers'
                 dropDownSelect={(e)=>{handleChange(parseInt(e.target.value,10) ,e.target.id)}}
-                options={[{ id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3}]}
+                options={[{ id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3},{ id: 4, value: 4}]}
                 labelText='Selected Passengers: ' />
             <button type="button"
                 className="btn btn-primary"
