@@ -56,7 +56,7 @@ const ReturnTabContent = ({ onSearchClick , price, setPrice}) => {
                     <SliderComponent id='price-range' min='0' max='10000'
                     value={priceRange}
                     onChange={(e) => { setPriceRange(e.target.value); setPrice(e.target.value)}} />
-                <p>{priceRange}</p>
+                <p>&#x20b9;{priceRange}</p>
             </div>
         </div>
     );
