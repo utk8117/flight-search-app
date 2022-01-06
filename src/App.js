@@ -11,6 +11,8 @@ function App() {
   const [error, setError] = useState(false);
   const [valid, setValid] = useState(true);
   const [returnFlight, setReturnFlight] = useState([]);
+  const [priceRange, setPriceRange] = useState(0);
+  const [flightResponse, setFlightResponse] = useState([]);
 
   const onSearchClick = (data) => {
     if (data.originCity && data.destinationCity && data.departureDate && data.passengers) {
@@ -33,10 +35,35 @@ function App() {
   }
 
   useEffect(() => {
+    if (priceRange > 10) {
+        let data = flightResponse.filter(value => {
+          if (value.origin === searchData.originCity &&
+            value.destination === searchData.destinationCity &&
+            moment(moment(value.date).format("L")).isSame(moment(searchData.departureDate).format("L")) && value.price <= priceRange) {
+            return value
+          }
+        })
+      setFlightData(data);
+      if (!searchData.isOneWay) {
+        let dataReturn = flightResponse.filter(value => {
+          if (value.destination === searchData.originCity &&
+            value.origin === searchData.destinationCity &&
+            moment(moment(value.date).format("L")).isSame(moment(searchData.departureDate).format("L")) &&
+            value.price <= priceRange) {
+            return value
+          }
+        })
+        setReturnFlight(dataReturn);
+      }
+    }
+  }, [priceRange])
+  
+  useEffect(() => {
     if (searchData) {
       axios.get('https://tw-frontenders.firebaseio.com/advFlightSearch.json')
       .then((resp) => {
         console.log(resp.data)
+        setFlightResponse(resp.data);
         let data = [];
         data = resp.data.filter(value => {
           if (value.origin === searchData.originCity &&
@@ -73,7 +100,7 @@ function App() {
       </div>
       <div className="body-wrapper row">
         <div className="outer-left-wrapper col-md-3">
-          <LeftSearch onSearchClick={onSearchClick} />
+          <LeftSearch onSearchClick={onSearchClick} price={priceRange} setPrice={setPriceRange} />
           <div>{ !valid ? <p className='invalid-input'>Please enter valid input</p>:null}</div>
         </div>
         

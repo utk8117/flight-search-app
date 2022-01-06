@@ -2,8 +2,10 @@ import DatePickerComponent from "./DatePicker";
 import SearchComponent from "./SearchComponent";
 import DropDownComponent from "./DropDownComponent";
 import { useEffect, useState } from "react";
+import SliderComponent from "./SliderComponent";
+import "../styles/OneWayTabContent.css"
 
-const OneWayTabContent = ({ onSearchClick }) => {
+const OneWayTabContent = ({ onSearchClick, price, setPrice }) => {
     const options = [
         { value: 'Pune (PNQ)', label: 'Pune (PNQ)' },
         { value: 'Mumbai (BOM)', label: 'Mumbai (BOM)' },
@@ -17,6 +19,7 @@ const OneWayTabContent = ({ onSearchClick }) => {
         passengers: 1,
         isOneWay: true,
     })
+    const [priceRange, setPriceRange] = useState(price);
     const handleChange = (value, id) => {
         let data = { ...searchData };
         data[id] = value;
@@ -48,6 +51,13 @@ const OneWayTabContent = ({ onSearchClick }) => {
                 className="btn btn-primary"
                 onClick={()=>onSearchClick(searchData)}
             >Search</button>
+            <div className="price-range-wrapper">
+                <p className="price-range-label">Price Range</p>
+                    <SliderComponent id='price-range' min='0' max='10000'
+                    value={priceRange}
+                    onChange={(e) => { setPriceRange(e.target.value); setPrice(e.target.value)}} />
+                <p>{priceRange}</p>
+            </div>
         </div>
     );
 }

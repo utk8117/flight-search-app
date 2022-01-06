@@ -3,8 +3,9 @@ import SearchComponent from "./SearchComponent";
 import DropDownComponent from "./DropDownComponent";
 import { useState } from "react";
 import '../styles/SearchComponent.css';
+import SliderComponent from "./SliderComponent";
 
-const ReturnTabContent = ({ onSearchClick }) => {
+const ReturnTabContent = ({ onSearchClick , price, setPrice}) => {
     const options = [
         { value: 'Pune (PNQ)', label: 'Pune (PNQ)' },
         { value: 'Mumbai (BOM)', label: 'Mumbai (BOM)' },
@@ -15,10 +16,11 @@ const ReturnTabContent = ({ onSearchClick }) => {
         originCity: '',
         destinationCity: '',
         departureDate: '',
-        returnDate:'',
+        returnDate: '',
         passengers: 1,
         isOneWay: false,
-    })
+    });
+    const [priceRange, setPriceRange] = useState(price);
     const handleChange = (value, id) => {
         let data = { ...searchData };
         data[id] = value;
@@ -49,6 +51,13 @@ const ReturnTabContent = ({ onSearchClick }) => {
                 className="btn btn-primary"
                 onClick={() => onSearchClick(searchData)}
             >Search</button>
+            <div className="price-range-wrapper">
+                <p className="price-range-label">Price Range</p>
+                    <SliderComponent id='price-range' min='0' max='10000'
+                    value={priceRange}
+                    onChange={(e) => { setPriceRange(e.target.value); setPrice(e.target.value)}} />
+                <p>{priceRange}</p>
+            </div>
         </div>
     );
 }
