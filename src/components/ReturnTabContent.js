@@ -52,7 +52,7 @@ const ReturnTabContent = ({ onSearchClick , price, setPrice}) => {
                 onClick={() => onSearchClick(searchData)}
             >Search</button>
             <div className="price-range-wrapper">
-                <p className="price-range-label">Price Range</p>
+                <p className="price-range-label">Refine flight search</p>
                     <SliderComponent id='price-range' min='0' max='10000'
                     value={priceRange}
                     onChange={(e) => { setPriceRange(e.target.value); setPrice(e.target.value)}} />
